@@ -8,12 +8,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.juanchi.grupos.api.grupos.entities.Product;
+import com.juanchi.grupos.api.grupos.repositories.IProductRepository;
 
 @Service
 public class ProductService implements IProductService{
 
     @Autowired
-    private IProductService repository;
+    private IProductRepository repository;
 
     @Transactional(readOnly = true)
     @Override

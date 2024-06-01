@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-GruposApplication<grupos>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.juanchi.grupos.api.grupos.GruposApplication",
+            "projectName": "grupos",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
