@@ -1,6 +1,7 @@
 package com.juanchi.grupos.api.grupos.controllers;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -43,8 +44,11 @@ public class ProductController {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@RequestBody Product product, @PathVariable Long id){
-        product.setId(id);
-        return ResponseEntity.status(HttpStatus.CREATED).body(productService.save(product));
+        Optional<Product> productOptional = productService.update(id, product);
+        if(productOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.CREATED).body(productOptional.orElseThrow());
+        }
+        return ResponseEntity.notFound().build();
     }
     
     @DeleteMapping("/{id}")

@@ -39,6 +39,20 @@ public class ProductService implements IProductService{
 
     @Transactional
     @Override
+    public Optional<Product> update(Long id, Product product) {
+        Optional<Product> productOptional = repository.findById(id);
+        if(productOptional.isPresent()) {
+            Product productdb = productOptional.orElseThrow();
+            productdb.setName(product.getName());
+            productdb.setPrice(product.getPrice());
+            productdb.setDescription(product.getDescription());
+            return Optional.of(repository.save(productdb));
+        }
+        return productOptional;
+    }
+    
+    @Transactional
+    @Override
     public Optional<Product> delete(Product product) {
         
         Optional<Product> productOptional = repository.findById(product.getId());
@@ -47,5 +61,5 @@ public class ProductService implements IProductService{
         });
         return productOptional;
     }
-    
+
 }
