@@ -22,11 +22,10 @@ public class GruposApplication {
 		return new OpenAPI().info(new Info()
 				.title("Grupos API")
 				.version("1.0")
-				.description("API para la gestión de grupos de usuarios")
-				.termsOfService("http://swagger.io/terms/")
-				.license(new License().name("Apache 2.0").url("http://springdoc.org"))
-				
-				.contact(new Contact().name("Juan Carlos").email("jmdelan2012@gmail.com").url("juanchi.com.ar")));
+				.description("API para la gestión de grupos de usuarios")				
+				.license(new License().name("Apache 2.0").url("http://springdoc.org")));
 	}
+				
+			
 
 }
