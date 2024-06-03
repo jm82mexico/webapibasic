@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.juanchi.grupos.api.grupos.entities.Product;
 import com.juanchi.grupos.api.grupos.services.IProductService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {
@@ -38,12 +40,12 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<Product> create(@RequestBody Product product){
+    public ResponseEntity<Product> create(@Valid @RequestBody Product product){
         return ResponseEntity.status(HttpStatus.CREATED).body(productService.save(product));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@RequestBody Product product, @PathVariable Long id){
+    public ResponseEntity<?> update(@Valid @RequestBody Product product, @PathVariable Long id){
         Optional<Product> productOptional = productService.update(id, product);
         if(productOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.CREATED).body(productOptional.orElseThrow());
