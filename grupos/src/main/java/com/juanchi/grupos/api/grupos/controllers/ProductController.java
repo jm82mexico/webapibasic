@@ -1,8 +1,8 @@
 package com.juanchi.grupos.api.grupos.controllers;
 
-import java.util.HashMap;
+
 import java.util.List;
-import java.util.Map;
+
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,19 +20,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.juanchi.grupos.api.grupos.entities.Product;
 import com.juanchi.grupos.api.grupos.services.IProductService;
-import com.juanchi.grupos.api.grupos.validation.ProductValidation;
+
 
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/products")
-public class ProductController {
+public class ProductController  extends BaseController {
 
     @Autowired
     private IProductService productService;
 
-    @Autowired
-    private ProductValidation productValidation;
+/*     @Autowired
+    private ProductValidation productValidation; */
 
     @GetMapping
     public List<Product> list(){
@@ -49,7 +49,7 @@ public class ProductController {
     @PostMapping
 public ResponseEntity<?> create(@Valid @RequestBody Product product, BindingResult result){
 
-        productValidation.validate(product, result);
+        /* productValidation.validate(product, result); */
         if(result.hasErrors()){
             return validation(result);
         }
@@ -58,7 +58,7 @@ public ResponseEntity<?> create(@Valid @RequestBody Product product, BindingResu
 
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@Valid @RequestBody Product product, BindingResult result, @PathVariable Long id){
-        productValidation.validate(product, result);
+        /* productValidation.validate(product, result); */
         if(result.hasErrors()){
             return validation(result);
         }
@@ -77,16 +77,5 @@ public ResponseEntity<?> create(@Valid @RequestBody Product product, BindingResu
             productService.delete(product);
             return ResponseEntity.ok().build();
         }).orElse(ResponseEntity.notFound().build());
-    }   
-
-    private ResponseEntity<?> validation(BindingResult result) {
-        
-        Map<String, String> errors = new HashMap<>();
-
-        result.getFieldErrors().forEach(err -> {
-            errors.put(err.getField(), "El campo " + err.getField() + " " + err.getDefaultMessage());
-        });
-
-        return ResponseEntity.badRequest().body(errors);
-    }
+    }  
 }
