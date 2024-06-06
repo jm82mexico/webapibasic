@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.juanchi.grupos.api.grupos.entities.Product;
 import com.juanchi.grupos.api.grupos.services.IProductService;
+import com.juanchi.grupos.api.grupos.validation.ProductValidation;
 
 import jakarta.validation.Valid;
 
@@ -29,6 +30,9 @@ public class ProductController {
 
     @Autowired
     private IProductService productService;
+
+    @Autowired
+    private ProductValidation productValidation;
 
     @GetMapping
     public List<Product> list(){
@@ -44,6 +48,8 @@ public class ProductController {
 
     @PostMapping
 public ResponseEntity<?> create(@Valid @RequestBody Product product, BindingResult result){
+
+        productValidation.validate(product, result);
         if(result.hasErrors()){
             return validation(result);
         }
@@ -52,6 +58,7 @@ public ResponseEntity<?> create(@Valid @RequestBody Product product, BindingResu
 
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@Valid @RequestBody Product product, BindingResult result, @PathVariable Long id){
+        productValidation.validate(product, result);
         if(result.hasErrors()){
             return validation(result);
         }
